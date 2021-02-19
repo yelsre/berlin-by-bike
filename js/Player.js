@@ -75,28 +75,28 @@ class Player {
   }
 
   // Player movements ================================== //
-  moveNorth(steps, orientation = "N") {
+  moveNorth(steps, orientation = NORTH) {
     this.y -= steps;
     if (this.y < MAPLIMIT) {
       this.y = MAPLIMIT;
     }
     this.orientation = orientation;
   }
-  moveSouth(steps, orientation = "S") {
+  moveSouth(steps, orientation = SOUTH) {
     this.y += steps;
     if (this.y + this.height > HEIGHT - MAPLIMIT) {
       this.y = HEIGHT - MAPLIMIT - this.height;
     }
     this.orientation = orientation;
   }
-  moveEast(steps, orientation = "E") {
+  moveEast(steps, orientation = EAST) {
     this.x += steps;
     if (this.x + this.width > WIDTH - MAPLIMIT) {
       this.x = WIDTH - MAPLIMIT - this.width;
     }
     this.orientation = orientation;
   }
-  moveWest(steps, orientation = "W") {
+  moveWest(steps, orientation = WEST) {
     this.x -= steps;
     if (this.x < MAPLIMIT) {
       this.x = MAPLIMIT;

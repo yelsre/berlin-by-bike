@@ -1,18 +1,18 @@
 class Poi {
-  constructor() {
-    this.x = WIDTH / 3;
-    this.y = HEIGHT / 3;
+  constructor(poix, poiy, name, wiki, wiki_img) {
+    this.x = poix;
+    this.y = poiy;
     this.width = 10;
     this.height = 10;
-    // this.lat = 52.5162781;
-    // this.lon = 13.3777055;
+    this.name = name;
+    this.wiki = wiki;
+    this.wiki_img = wiki_img;
+    this.status = "inactive";
   }
 
+  //calculate x and y location of Poi
+
   movePoi(playerX, playerY, playerWidth, playerHeight) {
-    // let currentTile =
-    //   bgArray[this.background.columnTile][this.background.rowTile];
-    // if(this.poi.lat2tile())
-    // console.log(currentTile)
     // Travelling East
     if (playerX + playerWidth >= WIDTH - MAPLIMIT && keyIsDown(ARROWRIGHT)) {
       this.x -= STEP;
@@ -32,6 +32,20 @@ class Poi {
   }
 
   draw() {
-    rect(this.x, this.y, this.width, this.height);
+    if (this.status === "inactive") {
+      rect(
+        this.x - this.width / 2,
+        this.y - this.height / 2,
+        this.width,
+        this.height
+      );
+    } else {
+      rect(
+        this.x - this.width / 2,
+        this.y - this.height / 2,
+        this.width * 2,
+        this.height * 2
+      );
+    }
   }
 }

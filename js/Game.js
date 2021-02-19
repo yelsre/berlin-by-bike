@@ -2,10 +2,18 @@ class Game {
   constructor() {
     this.background = new Background();
     this.player = new Player();
-    this.poi = new Poi();
+    this.poiArray = poiArray.map(
+      (element) =>
+        new Poi(
+          element[0].poixy[0],
+          element[0].poixy[1],
+          element[0].element.properties.name,
+          element[0].element.properties.wiki,
+          element[0].element.properties.wiki_img
+        )
+    );
+    this.score = 0;
   }
-
-  setup() {}
 
   moveBackground() {
     // each background move consists of two things, moving the background by a step when the bike nears the edge of the screen, then swapping the tile to load new ones
@@ -50,16 +58,48 @@ class Game {
   }
 
   movePoi() {
-    this.poi.movePoi(
-      this.player.x,
-      this.player.y,
-      this.player.width,
-      this.player.height
+    this.poiArray.forEach((poi) =>
+      poi.movePoi(
+        this.player.x,
+        this.player.y,
+        this.player.width,
+        this.player.height
+      )
     );
-    // let currentTile =
-    // bgArray[this.background.columnTile][this.background.rowTile];
-    // if(this.poi.lat2tile())
-    // console.log(currentTile)
+  }
+
+  collisionCheck(player, poi) {
+    const playerTopArea = player.y;
+    const playerLeftArea = player.x;
+    const playerRightArea = player.x + player.height;
+    const playerBottomArea = player.y + player.height;
+
+    const poiTopArea = poi.y;
+    const poiLeftArea = poi.x;
+    const poiRightArea = poi.x + poi.width;
+    const poiBottomArea = poi.y + poi.height;
+
+    const isTouchingOnLeft = poiRightArea > playerLeftArea;
+    const isTouchingOnBottom = poiTopArea < playerBottomArea;
+    const isTouchingOnRight = poiLeftArea < playerRightArea;
+    const isTouchingOnTop = poiBottomArea > playerTopArea;
+
+    return (
+      isTouchingOnBottom &&
+      isTouchingOnLeft &&
+      isTouchingOnRight &&
+      isTouchingOnTop
+    );
+  }
+
+  calculateSightsSeen() {
+    let sightsSeen = 0;
+    for (i = 0; i < this.poiArray.length; i++) {
+      if (this.poiArray[i].status === "active") {
+        sightsSeen++;
+      }
+      this.score = sightsSeen;
+    }
   }
 
   draw() {
@@ -67,7 +107,14 @@ class Game {
     this.moveBackground();
     this.movePoi();
     this.background.draw();
-    this.poi.draw();
+    this.poiArray.forEach((poi) => poi.draw());
     this.player.draw();
+    this.poiArray.forEach((poi) => {
+      if (this.collisionCheck(this.player, poi)) {
+        poi.status = "active";
+      }
+    });
+    this.calculateSightsSeen();
+    score.innerText = this.score;
   }
 }

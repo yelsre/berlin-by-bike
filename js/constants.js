@@ -9,6 +9,9 @@ const ARROWLEFT = 37;
 const ARROWRIGHT = 39;
 const TILESETZOOM = 12; // constant for the zoom of the tileset
 
+//
+const score = document.querySelector("h2 span");
+
 // NORTH SOUTH EAST WEST
 const NORTH = "N";
 const SOUTH = "S";
@@ -33,11 +36,19 @@ let bikerSW;
 // images for background
 let bgTilesLoaded;
 let bgRow = [];
+let bgRowArray = [];
+let bgColumnArray = [];
 const ROWMIN = 1340;
 const ROWMAX = 1346;
 const COLMIN = 2196;
 const COLMAX = 2204;
+const STARTTILEX = 0;
+const STARTTILEY = 0;
+const STARTCOLUMN = 3;
+const STARTROW = 3;
+const TILEWIDTHHEIGHT = WIDTH / 2; // tiles are always square so assign just 1 const.
 
+// Background tiles calculation ========================================//
 //create an array of arrays with size of ROWS
 for (i = ROWMIN; i <= ROWMAX; i++) {
   bgRow.push([i]);
@@ -58,8 +69,25 @@ bgArray = bgRow.map((array) => array.map((number) => [number, array[0]]));
 // remove the first temp value from the array
 bgArray.forEach((array) => array.shift());
 
-// geospatial functions
+for (i = ROWMIN; i <= ROWMAX; i++) {
+  bgRowArray.push(i);
+}
+
+for (i = COLMIN; i <= COLMAX; i++) {
+  bgColumnArray.push(i);
+}
+
+startTile = bgArray[STARTCOLUMN][STARTROW];
+tilePixle = bgArray.map((subArray) =>
+  subArray.map((element) => [
+    (element[0] - startTile[0]) * TILEWIDTHHEIGHT,
+    (element[1] - startTile[1]) * TILEWIDTHHEIGHT,
+  ])
+);
+
+// Point of interest calculation ========================================//
 // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
+
 function tile2long(x, z) {
   return (x / Math.pow(2, z)) * 360 - 180;
 }
@@ -84,3 +112,54 @@ function lat2tile(lat, zoom) {
       Math.pow(2, zoom)
   );
 }
+
+function tile2canvasPixelxy(poiLat, poiLon) {
+  let tilePixelX =
+    tilePixle[bgRowArray.indexOf(lat2tile(poiLat, TILESETZOOM))][
+      bgColumnArray.indexOf(lon2tile(poiLon, TILESETZOOM))
+    ][0];
+  let tilePixelY =
+    tilePixle[bgRowArray.indexOf(lat2tile(poiLat, TILESETZOOM))][
+      bgColumnArray.indexOf(lon2tile(poiLon, TILESETZOOM))
+    ][1];
+  let tileLon = lon2tile(poiLon, TILESETZOOM);
+  let tileLat = lat2tile(poiLat, TILESETZOOM);
+  tileTop = tile2long(tileLon, TILESETZOOM);
+  tileLeft = tile2lat(tileLat, TILESETZOOM);
+  tileBottom = tile2long(tileLon + 1, TILESETZOOM);
+  tileRight = tile2lat(tileLat + 1, TILESETZOOM);
+  tileWidthLat = tileRight - tileLeft;
+  tileHeightLon = tileTop - tileBottom;
+  poiWidthLat = poiLat - tileLeft;
+  poiHeightLon = tileTop - poiLon;
+  additionalPixelY = (poiWidthLat / tileWidthLat) * TILEWIDTHHEIGHT;
+  additionalPixelX = (poiHeightLon / tileHeightLon) * TILEWIDTHHEIGHT;
+  poiCanvasPixelX = tilePixelX + additionalPixelX;
+  poiCanvasPixelY = tilePixelY + additionalPixelY;
+  return [poiCanvasPixelX, poiCanvasPixelY];
+}
+
+const poiArray = poiObject.features.map((element) => [
+  {
+    element,
+    coordinate: element.geometry.coordinates,
+    tiles: [
+      lon2tile(element.geometry.coordinates[0], TILESETZOOM),
+      lat2tile(element.geometry.coordinates[1], TILESETZOOM),
+    ],
+    tilexy:
+      tilePixle[
+        bgRowArray.indexOf(
+          lat2tile(element.geometry.coordinates[1], TILESETZOOM)
+        )
+      ][
+        bgColumnArray.indexOf(
+          lon2tile(element.geometry.coordinates[0], TILESETZOOM)
+        )
+      ],
+    poixy: tile2canvasPixelxy(
+      element.geometry.coordinates[1],
+      element.geometry.coordinates[0]
+    ),
+  },
+]);
