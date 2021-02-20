@@ -12,7 +12,8 @@ class Poi {
 
   //calculate x and y location of Poi
 
-  movePoi(playerX, playerY, playerWidth, playerHeight) {
+  movePoi(playerX, playerY, playerWidth, playerHeight, playerVelocity) {
+    let STEP = playerVelocity;
     // Travelling East
     if (playerX + playerWidth >= WIDTH - MAPLIMIT && keyIsDown(ARROWRIGHT)) {
       this.x -= STEP;

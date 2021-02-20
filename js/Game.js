@@ -18,6 +18,7 @@ class Game {
   moveBackground() {
     // each background move consists of two things, moving the background by a step when the bike nears the edge of the screen, then swapping the tile to load new ones, but not trying to load tiles which dont exist
     // Travelling East
+    let STEP = this.player.velocity;
     if (
       this.player.x + this.player.width >= WIDTH - MAPLIMIT &&
       keyIsDown(ARROWRIGHT)
@@ -75,7 +76,8 @@ class Game {
         this.player.x,
         this.player.y,
         this.player.width,
-        this.player.height
+        this.player.height,
+        this.player.velocity
       )
     );
   }
@@ -128,6 +130,12 @@ class Game {
   replayGame() {
     frameCount = 0;
     this.poiArray.forEach((poi) => (poi.status = "inactive"));
+    this.poiArray.forEach(
+      (poi, index) => (poi.x = poiArray[index][0].poixy[0])
+    );
+    this.poiArray.forEach(
+      (poi, index) => (poi.y = poiArray[index][0].poixy[1])
+    );
     const poiVisited = document.getElementById("poi-visited");
     while (poiVisited.firstChild) {
       poiVisited.removeChild(poiVisited.firstChild);
@@ -138,6 +146,8 @@ class Game {
     this.background.rowTile = STARTROW;
     this.player.x = WIDTH / 2;
     this.player.y = HEIGHT / 2;
+    this.player.width = 70;
+    this.player.height = 40;
     this.player.orientation = EAST;
     this.player.isInCanvas = true;
   }
@@ -171,11 +181,14 @@ class Game {
       noLoop();
       const button = document.createElement("button");
       const gameDiv = document.getElementById("game-div");
+      const canvasDiv = document.getElementById("defaultCanvas0");
       button.innerText = `${this.score} sights seen. Click to play again.`;
+      canvasDiv.style.display = "none";
       gameDiv.appendChild(button);
       button.onclick = () => {
         this.replayGame();
         button.parentNode.removeChild(button);
+        canvasDiv.style.display = "";
         loop();
       };
     }

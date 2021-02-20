@@ -1,7 +1,7 @@
 const WIDTH = 600;
 const HEIGHT = WIDTH / 2;
-const STEP = 4;
-const STEPDIAGONAL = Math.sqrt((STEP * STEP) / 2);
+const ACCELERATION = 0.05;
+const MAXVELOCITY = 4;
 const MAPLIMIT = 40; // the limit that the bike can go to the edge of the map
 const ARROWUP = 38;
 const ARROWDOWN = 40;

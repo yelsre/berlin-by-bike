@@ -6,6 +6,7 @@ class Player {
     this.height = 40;
     this.orientation = EAST;
     this.isInCanvas = true;
+    this.velocity = 0;
   }
 
   inCanvas(bgX, bgY, bgWidth, bgHeight, bgColumnTile, bgRowTile) {
@@ -58,47 +59,63 @@ class Player {
   draw() {
     // move the player depending on the key pressed, and then change orientation
     // make sure only one key is pressed
+    let STEP = this.velocity;
+    let STEPDIAGONAL = Math.sqrt((STEP * STEP) / 2);
+    if (this.velocity >= MAXVELOCITY) {
+      this.velocity = MAXVELOCITY;
+    }
     const isArrowUp = keyIsDown(ARROWUP);
     const isArrowDown = keyIsDown(ARROWDOWN);
     const isArrowLeft = keyIsDown(ARROWLEFT);
     const isArrowRight = keyIsDown(ARROWRIGHT);
     if (isArrowUp && !isArrowDown && !isArrowLeft && !isArrowRight) {
+      this.velocity += ACCELERATION;
       this.moveNorth(STEP);
       this.height = 70;
     }
     if (isArrowDown && !isArrowUp && !isArrowLeft && !isArrowRight) {
+      this.velocity += ACCELERATION;
       this.moveSouth(STEP);
       this.height = 70;
     }
     if (isArrowRight && !isArrowUp && !isArrowDown && !isArrowLeft) {
+      this.velocity += ACCELERATION;
       this.moveEast(STEP);
       this.height = 40;
     }
     if (isArrowLeft && !isArrowUp && !isArrowDown && !isArrowRight) {
+      this.velocity += ACCELERATION;
       this.moveWest(STEP);
       this.height = 40;
     }
     // account for the case where two keys are pressed ensuring same velocity (pythagoras)
     // https://p5.readthedocs.io/en/latest/tutorials/vector.html
     if (isArrowUp && isArrowRight) {
+      this.velocity += ACCELERATION;
       this.moveNorth(STEPDIAGONAL, NORTHEAST);
       this.moveEast(STEPDIAGONAL, NORTHEAST);
       this.height = 70;
     }
     if (isArrowUp && isArrowLeft) {
+      this.velocity += ACCELERATION;
       this.moveNorth(STEPDIAGONAL, NORTHWEST);
       this.moveWest(STEPDIAGONAL, NORTHWEST);
       this.height = 70;
     }
     if (isArrowDown && isArrowRight) {
+      this.velocity += ACCELERATION;
       this.moveSouth(STEPDIAGONAL, SOUTHEAST);
       this.moveEast(STEPDIAGONAL, SOUTHEAST);
       this.height = 70;
     }
     if (isArrowDown && isArrowLeft) {
+      this.velocity += ACCELERATION;
       this.moveSouth(STEPDIAGONAL, SOUTHWEST);
       this.moveWest(STEPDIAGONAL, SOUTHWEST);
       this.height = 70;
+    }
+    if (!isArrowDown && !isArrowUp && !isArrowLeft && !isArrowRight) {
+      this.velocity = 0;
     }
     // change the character image depending on orientation
     if (this.orientation === NORTH) {

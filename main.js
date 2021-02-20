@@ -1,3 +1,8 @@
+//to do
+// add countdown timer
+// make the sight appear at the top of the list
+// add the change in velocity
+
 const game = new Game();
 let started = false;
 
@@ -33,10 +38,13 @@ function setup() {
   gameCanvas.parent("game-div");
   score.innerText = game.score;
   const gameDiv = document.getElementById("game-div");
+  const canvasDiv = document.getElementById("defaultCanvas0");
+  canvasDiv.style.display = "none";
   const button = document.createElement("button");
   button.innerText = `Play game`;
   gameDiv.appendChild(button);
   button.onclick = () => {
+    canvasDiv.style.display = "";
     start();
     button.parentNode.removeChild(button);
   };
