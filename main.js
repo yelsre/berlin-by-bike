@@ -1,4 +1,5 @@
 const game = new Game();
+let started = false;
 
 function preload() {
   biker = loadImage("./img/player/player.png");
@@ -17,10 +18,31 @@ function preload() {
 }
 
 function draw() {
-  game.draw();
+  if (started) {
+    game.draw();
+  }
+}
+
+function start() {
+  started = true;
+  loop();
 }
 
 function setup() {
-  createCanvas(WIDTH, HEIGHT);
+  const gameCanvas = createCanvas(WIDTH, HEIGHT);
+  gameCanvas.parent("game-div");
   score.innerText = game.score;
+  const gameDiv = document.getElementById("game-div");
+  const button = document.createElement("button");
+  button.innerText = `Play game`;
+  gameDiv.appendChild(button);
+  button.onclick = () => {
+    start();
+    button.parentNode.removeChild(button);
+  };
+  noLoop();
+
+  const poiVisited = document.createElement("ul");
+  poiVisited.setAttribute("id", "poi-visited");
+  document.body.appendChild(poiVisited);
 }

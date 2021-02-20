@@ -11,6 +11,8 @@ const TILESETZOOM = 12; // constant for the zoom of the tileset
 
 //
 const score = document.querySelector("h2 span");
+const GAMELENGTH = 10; // game length in seconds
+const FRAMERATE = 60; //p5 frame rate per second
 
 // NORTH SOUTH EAST WEST
 const NORTH = "N";

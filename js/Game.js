@@ -125,9 +125,26 @@ class Game {
     }
   }
 
+  replayGame() {
+    frameCount = 0;
+    this.poiArray.forEach((poi) => (poi.status = "inactive"));
+    const poiVisited = document.getElementById("poi-visited");
+    while (poiVisited.firstChild) {
+      poiVisited.removeChild(poiVisited.firstChild);
+    }
+    this.background.x = STARTTILEX;
+    this.background.y = STARTTILEY;
+    this.background.columnTile = STARTCOLUMN;
+    this.background.rowTile = STARTROW;
+    this.player.x = WIDTH / 2;
+    this.player.y = HEIGHT / 2;
+    this.player.orientation = EAST;
+    this.player.isInCanvas = true;
+  }
+
   draw() {
     clear();
-    this.inCanvas();
+    this.inCanvas(); // calculate where the player is in relation to the map
     if (this.player.isInCanvas) {
       this.moveBackground();
       this.movePoi();
@@ -138,9 +155,29 @@ class Game {
     this.poiArray.forEach((poi) => {
       if (this.collisionCheck(this.player, poi)) {
         poi.status = "active";
+        const poiVisited = document.getElementById("poi-visited");
+        const poiName = document.createElement("li");
+        poiName.innerText = `${poi.name} was visited`;
+        let numberPoiVisited = poiVisited.childElementCount;
+        if (numberPoiVisited < this.score) {
+          poiVisited.appendChild(poiName);
+        }
       }
     });
     this.calculateSightsSeen();
     score.innerText = this.score;
+    let secondsPassed = frameCount / FRAMERATE;
+    if (secondsPassed >= GAMELENGTH) {
+      noLoop();
+      const button = document.createElement("button");
+      const gameDiv = document.getElementById("game-div");
+      button.innerText = `${this.score} sights seen. Click to play again.`;
+      gameDiv.appendChild(button);
+      button.onclick = () => {
+        this.replayGame();
+        button.parentNode.removeChild(button);
+        loop();
+      };
+    }
   }
 }
