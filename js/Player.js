@@ -5,6 +5,54 @@ class Player {
     this.width = 70;
     this.height = 40;
     this.orientation = EAST;
+    this.isInCanvas = true;
+  }
+
+  inCanvas(bgX, bgY, bgWidth, bgHeight, bgColumnTile, bgRowTile) {
+    if (
+      (bgRowTile === bgTiles[0].length - 3 &&
+        bgX <= -TILEWIDTHHEIGHT &&
+        this.x >= WIDTH - MAPLIMIT - this.width) ||
+      (bgRowTile === 1 && bgX >= TILEWIDTHHEIGHT && this.x <= MAPLIMIT) ||
+      (bgColumnTile === bgTiles.length - 2 &&
+        bgY <= -TILEWIDTHHEIGHT &&
+        this.y >= HEIGHT - MAPLIMIT - this.height) ||
+      (bgColumnTile === 1 && bgY >= TILEWIDTHHEIGHT && this.y <= MAPLIMIT)
+    ) {
+      this.isInCanvas = false;
+    } else {
+      this.isInCanvas = true;
+    }
+  }
+
+  // Player movements ================================== //
+  moveNorth(steps, orientation = NORTH) {
+    this.y -= steps;
+    if (this.y < MAPLIMIT) {
+      this.y = MAPLIMIT;
+    }
+    this.orientation = orientation;
+  }
+  moveSouth(steps, orientation = SOUTH) {
+    this.y += steps;
+    if (this.y + this.height > HEIGHT - MAPLIMIT) {
+      this.y = HEIGHT - MAPLIMIT - this.height;
+    }
+    this.orientation = orientation;
+  }
+  moveEast(steps, orientation = EAST) {
+    this.x += steps;
+    if (this.x + this.width > WIDTH - MAPLIMIT) {
+      this.x = WIDTH - MAPLIMIT - this.width;
+    }
+    this.orientation = orientation;
+  }
+  moveWest(steps, orientation = WEST) {
+    this.x -= steps;
+    if (this.x < MAPLIMIT) {
+      this.x = MAPLIMIT;
+    }
+    this.orientation = orientation;
   }
 
   draw() {
@@ -72,35 +120,5 @@ class Player {
     } else {
       // image (bikerE, this.x, this.y, this.width, this.height);
     }
-  }
-
-  // Player movements ================================== //
-  moveNorth(steps, orientation = NORTH) {
-    this.y -= steps;
-    if (this.y < MAPLIMIT) {
-      this.y = MAPLIMIT;
-    }
-    this.orientation = orientation;
-  }
-  moveSouth(steps, orientation = SOUTH) {
-    this.y += steps;
-    if (this.y + this.height > HEIGHT - MAPLIMIT) {
-      this.y = HEIGHT - MAPLIMIT - this.height;
-    }
-    this.orientation = orientation;
-  }
-  moveEast(steps, orientation = EAST) {
-    this.x += steps;
-    if (this.x + this.width > WIDTH - MAPLIMIT) {
-      this.x = WIDTH - MAPLIMIT - this.width;
-    }
-    this.orientation = orientation;
-  }
-  moveWest(steps, orientation = WEST) {
-    this.x -= steps;
-    if (this.x < MAPLIMIT) {
-      this.x = MAPLIMIT;
-    }
-    this.orientation = orientation;
   }
 }

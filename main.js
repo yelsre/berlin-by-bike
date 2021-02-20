@@ -1,8 +1,3 @@
-// change the player image depending on button pressed
-// 2. player switch between several background images
-// 3. create sightseeing objects
-// 4. collide identification with sightseeing objects
-
 const game = new Game();
 
 function preload() {
@@ -16,7 +11,6 @@ function preload() {
   bikerSE = loadImage("./img/player/playerSE.png");
   bikerSW = loadImage("./img/player/playerSW.png");
 
-  // bgTilesLoaded = bgTiles[4].map(tile => loadImage(tile));
   bgTilesLoaded = bgTiles.map((column) =>
     column.map((tile) => loadImage(tile))
   );

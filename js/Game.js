@@ -16,7 +16,7 @@ class Game {
   }
 
   moveBackground() {
-    // each background move consists of two things, moving the background by a step when the bike nears the edge of the screen, then swapping the tile to load new ones
+    // each background move consists of two things, moving the background by a step when the bike nears the edge of the screen, then swapping the tile to load new ones, but not trying to load tiles which dont exist
     // Travelling East
     if (
       this.player.x + this.player.width >= WIDTH - MAPLIMIT &&
@@ -24,7 +24,10 @@ class Game {
     ) {
       this.background.x -= STEP;
     }
-    if (this.background.x <= -this.background.width) {
+    if (
+      this.background.x <= -this.background.width &&
+      this.background.rowTile < bgTiles[0].length - 3
+    ) {
       this.background.rowTile += 1;
       this.background.x = 0;
     }
@@ -32,7 +35,10 @@ class Game {
     if (this.player.x <= MAPLIMIT && keyIsDown(ARROWLEFT)) {
       this.background.x += STEP;
     }
-    if (this.background.x >= this.background.width) {
+    if (
+      this.background.x >= this.background.width &&
+      this.background.rowTile > 1
+    ) {
       this.background.rowTile -= 1;
       this.background.x = 0;
     }
@@ -40,7 +46,10 @@ class Game {
     if (this.player.y <= MAPLIMIT && keyIsDown(ARROWUP)) {
       this.background.y += STEP;
     }
-    if (this.background.y >= this.background.height) {
+    if (
+      this.background.y >= this.background.height &&
+      this.background.columnTile > 1
+    ) {
       this.background.columnTile -= 1;
       this.background.y = 0;
     }
@@ -51,7 +60,10 @@ class Game {
     ) {
       this.background.y -= STEP;
     }
-    if (this.background.y <= -this.background.height) {
+    if (
+      this.background.y <= -this.background.height &&
+      this.background.columnTile < bgTiles.length - 2
+    ) {
       this.background.columnTile += 1;
       this.background.y = 0;
     }
@@ -65,6 +77,17 @@ class Game {
         this.player.width,
         this.player.height
       )
+    );
+  }
+
+  inCanvas() {
+    this.player.inCanvas(
+      this.background.x,
+      this.background.y,
+      this.background.width,
+      this.background.height,
+      this.background.columnTile,
+      this.background.rowTile
     );
   }
 
@@ -104,8 +127,11 @@ class Game {
 
   draw() {
     clear();
-    this.moveBackground();
-    this.movePoi();
+    this.inCanvas();
+    if (this.player.isInCanvas) {
+      this.moveBackground();
+      this.movePoi();
+    }
     this.background.draw();
     this.poiArray.forEach((poi) => poi.draw());
     this.player.draw();
