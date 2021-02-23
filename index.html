@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <h2>Sights seen: <span></span></h2>
-    <br />
-    <main id="game-div"></main>
-    <br />
-    Background tiles: © OpenStreetMap contributors <br />
-    Base map and data from OpenStreetMap and OpenStreetMap Foundation <br />
+    <main>
+      <header>
+        <div id="score">Sights seen: <span></span></div>
+        <div id="time-left">Time left: <span></span></div>
+      </header>
+      <div id="game"></div>
+      <div id="sights"></div>
+      <footer>
+        Background tiles: © OpenStreetMap contributors Base map and data from
+        OpenStreetMap and OpenStreetMap Foundation
+      </footer>
+    </main>
     <script src="js/poiObject.js"></script>
     <script src="js/constants.js"></script>
     <script src="js/Poi.js"></script>

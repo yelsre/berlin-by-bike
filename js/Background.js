@@ -23,7 +23,6 @@ class Background {
       this.width,
       this.height
     ); // Initial tiles
-
     image(
       bgTilesLoaded[this.columnTile][this.rowTile + 2],
       this.x + 2 * this.width,
@@ -31,7 +30,6 @@ class Background {
       this.width,
       this.height
     ); // Tile to the East
-
     image(
       bgTilesLoaded[this.columnTile][this.rowTile - 1],
       this.x - this.width,

@@ -153,6 +153,14 @@ class Game {
   }
 
   draw() {
+    let secondsPassed = frameCount / FRAMERATE;
+    let secondsLeftRounded = Math.round(GAMELENGTH - secondsPassed);
+    const poiVisited = document.getElementById("sights");
+    const poiName = document.createElement("li");
+    let numberPoiVisited = poiVisited.childElementCount;
+    const button = document.createElement("button");
+    const canvasDiv = document.getElementById("defaultCanvas0");
+
     clear();
     this.inCanvas(); // calculate where the player is in relation to the map
     if (this.player.isInCanvas) {
@@ -165,26 +173,21 @@ class Game {
     this.poiArray.forEach((poi) => {
       if (this.collisionCheck(this.player, poi)) {
         poi.status = "active";
-        const poiVisited = document.getElementById("poi-visited");
-        const poiName = document.createElement("li");
         poiName.innerText = `${poi.name} was visited`;
-        let numberPoiVisited = poiVisited.childElementCount;
         if (numberPoiVisited < this.score) {
           poiVisited.appendChild(poiName);
         }
       }
     });
+    // calculate an update number of sights seen (score)
     this.calculateSightsSeen();
-    score.innerText = this.score;
-    let secondsPassed = frameCount / FRAMERATE;
+    docScore.innerText = this.score;
+    docTimeLeft.innerText = secondsLeftRounded;
     if (secondsPassed >= GAMELENGTH) {
       noLoop();
-      const button = document.createElement("button");
-      const gameDiv = document.getElementById("game-div");
-      const canvasDiv = document.getElementById("defaultCanvas0");
       button.innerText = `${this.score} sights seen. Click to play again.`;
       canvasDiv.style.display = "none";
-      gameDiv.appendChild(button);
+      docGame.appendChild(button);
       button.onclick = () => {
         this.replayGame();
         button.parentNode.removeChild(button);

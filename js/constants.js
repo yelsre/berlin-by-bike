@@ -1,4 +1,4 @@
-const WIDTH = 600;
+const WIDTH = 512;
 const HEIGHT = WIDTH / 2;
 const ACCELERATION = 0.05;
 const MAXVELOCITY = 4;
@@ -7,11 +7,16 @@ const ARROWUP = 38;
 const ARROWDOWN = 40;
 const ARROWLEFT = 37;
 const ARROWRIGHT = 39;
-const TILESETZOOM = 12; // constant for the zoom of the tileset
+const TILESETZOOM = 14; // constant for the zoom of the tileset
 
 //
-const score = document.querySelector("h2 span");
-const GAMELENGTH = 10; // game length in seconds
+const docScore = document.querySelector("#score span");
+const docSights = document.querySelector("#sights");
+const docTimeLeft = document.querySelector("#time-left span");
+const docGame = document.querySelector("#game");
+
+// const doc
+const GAMELENGTH = 30; // game length in seconds
 const FRAMERATE = 60; //p5 frame rate per second
 
 // NORTH SOUTH EAST WEST
@@ -40,14 +45,14 @@ let bgTilesLoaded;
 let bgRow = [];
 let bgRowArray = [];
 let bgColumnArray = [];
-const ROWMIN = 1340;
-const ROWMAX = 1346;
-const COLMIN = 2196;
-const COLMAX = 2204;
+const ROWMIN = 5361;
+const ROWMAX = 5386;
+const COLMIN = 8787;
+const COLMAX = 8818;
 const STARTTILEX = 0;
 const STARTTILEY = 0;
-const STARTCOLUMN = 3;
-const STARTROW = 3;
+const STARTCOLUMN = 10;
+const STARTROW = 10;
 const TILEWIDTHHEIGHT = WIDTH / 2; // tiles are always square so assign just 1 const.
 
 // Background tiles calculation ========================================//
@@ -61,7 +66,7 @@ for (i = COLMIN; i <= COLMAX; i++) {
 }
 // create the link to the tiles from the image
 bgTiles = bgRow.map((array) =>
-  array.map((number) => `./img/background/${number}/${array[0]}.png`)
+  array.map((number) => `./img/background/${number}/${array[0]}.jpg`)
 );
 // remove the first temp value from the array
 bgTiles.forEach((array) => array.shift());

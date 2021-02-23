@@ -35,22 +35,21 @@ function start() {
 
 function setup() {
   const gameCanvas = createCanvas(WIDTH, HEIGHT);
-  gameCanvas.parent("game-div");
-  score.innerText = game.score;
-  const gameDiv = document.getElementById("game-div");
-  const canvasDiv = document.getElementById("defaultCanvas0");
-  canvasDiv.style.display = "none";
+  const docCanvas = document.getElementById("defaultCanvas0");
   const button = document.createElement("button");
+  const poiVisited = document.createElement("ul");
+
+  gameCanvas.parent("game");
+  docScore.innerText = game.score;
+  docCanvas.style.display = "none";
   button.innerText = `Play game`;
-  gameDiv.appendChild(button);
+  docGame.appendChild(button);
   button.onclick = () => {
-    canvasDiv.style.display = "";
+    docCanvas.style.display = "";
     start();
     button.parentNode.removeChild(button);
   };
   noLoop();
-
-  const poiVisited = document.createElement("ul");
   poiVisited.setAttribute("id", "poi-visited");
   document.body.appendChild(poiVisited);
 }
