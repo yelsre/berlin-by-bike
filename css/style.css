@@ -1,10 +1,19 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 body {
+  background-image: url("../img/theme/bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
   background-color: lightgreen;
 }
 
 main {
   margin: 0 auto;
   width: 600px;
+  /* background-color: white; */
 }
 
 header {
@@ -18,4 +27,28 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  background-color: white;
+  margin: 20px;
+  padding: 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 5px 5px #e27c28;
+}
+
+img {
+  filter: grayscale(50%);
+  border-radius: 5px;
 }
