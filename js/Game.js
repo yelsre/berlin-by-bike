@@ -136,9 +136,8 @@ class Game {
     this.poiArray.forEach(
       (poi, index) => (poi.y = poiArray[index][0].poixy[1])
     );
-    const poiVisited = document.getElementById("poi-visited");
-    while (poiVisited.firstChild) {
-      poiVisited.removeChild(poiVisited.firstChild);
+    while (docSights.firstChild) {
+      docSights.removeChild(docSights.firstChild);
     }
     this.background.x = STARTTILEX;
     this.background.y = STARTTILEY;
@@ -155,11 +154,12 @@ class Game {
   draw() {
     let secondsPassed = frameCount / FRAMERATE;
     let secondsLeftRounded = Math.round(GAMELENGTH - secondsPassed);
-    const poiVisited = document.getElementById("sights");
-    const poiName = document.createElement("li");
-    let numberPoiVisited = poiVisited.childElementCount;
+    const newSight = document.createElement("li");
+    let numberPoiVisited = docSights.childElementCount;
+    let allSightsSeen = docSights.childNodes;
     const button = document.createElement("button");
     const canvasDiv = document.getElementById("defaultCanvas0");
+    const countdownDiv = document.getElementById("countdown");
 
     clear();
     this.inCanvas(); // calculate where the player is in relation to the map
@@ -173,9 +173,13 @@ class Game {
     this.poiArray.forEach((poi) => {
       if (this.collisionCheck(this.player, poi)) {
         poi.status = "active";
-        poiName.innerText = `${poi.name} was visited`;
+        newSight.innerHTML = `<a href="${poi.wiki}" target="_blank">${poi.name}</a> 
+          <img src="${poi.wiki_img}" alt="Poi image from wikipedia" height="100">
+        `;
         if (numberPoiVisited < this.score) {
-          poiVisited.appendChild(poiName);
+          allSightsSeen.forEach((node) => (node.style.display = "none"));
+          docSights.insertAdjacentElement("afterbegin", newSight);
+          newSight.style.display = "";
         }
       }
     });
@@ -183,8 +187,12 @@ class Game {
     this.calculateSightsSeen();
     docScore.innerText = this.score;
     docTimeLeft.innerText = secondsLeftRounded;
+    countdownDiv.style.width = `${
+      ((GAMELENGTH - secondsPassed) / GAMELENGTH) * 100
+    }px`;
     if (secondsPassed >= GAMELENGTH) {
       noLoop();
+      allSightsSeen.forEach((node) => (node.style.display = ""));
       button.innerText = `${this.score} sights seen. Click to play again.`;
       canvasDiv.style.display = "none";
       docGame.appendChild(button);
