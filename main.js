@@ -46,7 +46,6 @@ function setup() {
   const docStart = document.createElement("div");
   const docInstructions = document.createElement("div");
   const button = document.createElement("button");
-  // const poiVisited = document.createElement("ul");
 
   gameCanvas.parent("game");
   docScore.innerText = game.score;
@@ -58,11 +57,12 @@ function setup() {
     "<h1> Instructions </h1>" +
     "<h2> 1. Explore Berlin by bike </h2>" +
     "<div>" +
-    "<h2> 2. See as many sights as you can </h2>" +
+    `<img src="img/player/playerE.png" alt="Bike player" width="70" height="70">` +
     "</div>" +
+    `<h2> 2. See as many sights as you can <img src="img/theme/unseen.png" alt="Bike player" width="30" height="50"> </h2> ` +
     "<h2> 3. Before it gets dark </h2>";
 
-  button.innerText = `Play`;
+  button.innerText = `Play.`;
   docGame.appendChild(docStart);
   docStart.appendChild(docInstructions);
   docInstructions.appendChild(button);
@@ -72,6 +72,4 @@ function setup() {
     docStart.style.display = "none";
   };
   noLoop();
-  // poiVisited.setAttribute("id", "poi-visited");
-  // document.body.appendChild(poiVisited);
 }

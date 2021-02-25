@@ -1,4 +1,4 @@
-const WIDTH = 512;
+const WIDTH = 600;
 const HEIGHT = WIDTH / 2;
 const ACCELERATION = 0.05;
 const MAXVELOCITY = 4;

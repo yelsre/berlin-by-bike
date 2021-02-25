@@ -183,6 +183,7 @@ class Game {
         }
       }
     });
+
     // calculate an update number of sights seen (score)
     this.calculateSightsSeen();
     docScore.innerText = this.score;
