@@ -6,15 +6,26 @@
     <title>Sightseeing by bike - Berlin</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <main>
       <header>
         <div id="score">Sights seen: <span></span></div>
-        <div id="time-left">Time left: <span></span></div>
+        <div id="time-left">
+          <img src="/img/theme/sun.png" alt="Sun image" />
+          <div id="countdown"></div>
+          <img src="/img/theme/moon.png" alt="Sun image" />
+          <span></span>
+        </div>
       </header>
       <div id="game"></div>
-      <div id="sights"></div>
+      <ul id="sights"></ul>
       <footer>
         Background tiles: © OpenStreetMap contributors Base map and data from
         OpenStreetMap and OpenStreetMap Foundation

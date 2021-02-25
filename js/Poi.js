@@ -2,8 +2,8 @@ class Poi {
   constructor(poix, poiy, name, wiki, wiki_img) {
     this.x = poix;
     this.y = poiy;
-    this.width = 10;
-    this.height = 10;
+    this.width = 30;
+    this.height = 50;
     this.name = name;
     this.wiki = wiki;
     this.wiki_img = wiki_img;
@@ -34,19 +34,9 @@ class Poi {
 
   draw() {
     if (this.status === "inactive") {
-      rect(
-        this.x - this.width / 2,
-        this.y - this.height / 2,
-        this.width,
-        this.height
-      );
+      image(unseen, this.x, this.y - this.height, this.width, this.height);
     } else {
-      rect(
-        this.x - this.width / 2,
-        this.y - this.height / 2,
-        this.width * 2,
-        this.height * 2
-      );
+      image(seen, this.x, this.y - this.height, this.width, this.height);
     }
   }
 }

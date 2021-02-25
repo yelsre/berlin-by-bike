@@ -99,10 +99,10 @@ class Game {
     const playerRightArea = player.x + player.height;
     const playerBottomArea = player.y + player.height;
 
-    const poiTopArea = poi.y;
+    const poiTopArea = poi.y - poi.height;
     const poiLeftArea = poi.x;
     const poiRightArea = poi.x + poi.width;
-    const poiBottomArea = poi.y + poi.height;
+    const poiBottomArea = poi.y;
 
     const isTouchingOnLeft = poiRightArea > playerLeftArea;
     const isTouchingOnBottom = poiTopArea < playerBottomArea;
@@ -146,7 +146,7 @@ class Game {
     this.player.x = WIDTH / 2;
     this.player.y = HEIGHT / 2;
     this.player.width = 70;
-    this.player.height = 40;
+    this.player.height = 70;
     this.player.orientation = EAST;
     this.player.isInCanvas = true;
   }

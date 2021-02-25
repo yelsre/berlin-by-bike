@@ -5,6 +5,7 @@
 
 const game = new Game();
 let started = false;
+let loading = true;
 
 function preload() {
   biker = loadImage("./img/player/player.png");
@@ -16,15 +17,21 @@ function preload() {
   bikerNW = loadImage("./img/player/playerNW.png");
   bikerSE = loadImage("./img/player/playerSE.png");
   bikerSW = loadImage("./img/player/playerSW.png");
+  unseen = loadImage("./img/theme/unseen.png");
+  seen = loadImage("./img/theme/seen.png");
 
   bgTilesLoaded = bgTiles.map((column) =>
     column.map((tile) => loadImage(tile))
   );
+
+  loading = false;
 }
 
 function draw() {
-  if (started) {
+  if (started && !loading) {
     game.draw();
+  } else {
+    background(0, 3, 0);
   }
 }
 
@@ -36,20 +43,35 @@ function start() {
 function setup() {
   const gameCanvas = createCanvas(WIDTH, HEIGHT);
   const docCanvas = document.getElementById("defaultCanvas0");
+  const docStart = document.createElement("div");
+  const docInstructions = document.createElement("div");
   const button = document.createElement("button");
-  const poiVisited = document.createElement("ul");
+  // const poiVisited = document.createElement("ul");
 
   gameCanvas.parent("game");
   docScore.innerText = game.score;
   docCanvas.style.display = "none";
-  button.innerText = `Play game`;
-  docGame.appendChild(button);
+  docStart.setAttribute("id", "start");
+  docStart.classList.add("start-end");
+  docInstructions.setAttribute("id", "instructions");
+  docInstructions.innerHTML =
+    "<h1> Instructions </h1>" +
+    "<h2> 1. Explore Berlin by bike </h2>" +
+    "<div>" +
+    "<h2> 2. See as many sights as you can </h2>" +
+    "</div>" +
+    "<h2> 3. Before it gets dark </h2>";
+
+  button.innerText = `Play`;
+  docGame.appendChild(docStart);
+  docStart.appendChild(docInstructions);
+  docInstructions.appendChild(button);
   button.onclick = () => {
     docCanvas.style.display = "";
     start();
-    button.parentNode.removeChild(button);
+    docStart.style.display = "none";
   };
   noLoop();
-  poiVisited.setAttribute("id", "poi-visited");
-  document.body.appendChild(poiVisited);
+  // poiVisited.setAttribute("id", "poi-visited");
+  // document.body.appendChild(poiVisited);
 }

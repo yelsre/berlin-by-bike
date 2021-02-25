@@ -3,7 +3,7 @@ class Player {
     this.x = WIDTH / 2;
     this.y = HEIGHT / 2;
     this.width = 70;
-    this.height = 40;
+    this.height = 70;
     this.orientation = EAST;
     this.isInCanvas = true;
     this.velocity = 0;
@@ -71,22 +71,18 @@ class Player {
     if (isArrowUp && !isArrowDown && !isArrowLeft && !isArrowRight) {
       this.velocity += ACCELERATION;
       this.moveNorth(STEP);
-      this.height = 70;
     }
     if (isArrowDown && !isArrowUp && !isArrowLeft && !isArrowRight) {
       this.velocity += ACCELERATION;
       this.moveSouth(STEP);
-      this.height = 70;
     }
     if (isArrowRight && !isArrowUp && !isArrowDown && !isArrowLeft) {
       this.velocity += ACCELERATION;
       this.moveEast(STEP);
-      this.height = 40;
     }
     if (isArrowLeft && !isArrowUp && !isArrowDown && !isArrowRight) {
       this.velocity += ACCELERATION;
       this.moveWest(STEP);
-      this.height = 40;
     }
     // account for the case where two keys are pressed ensuring same velocity (pythagoras)
     // https://p5.readthedocs.io/en/latest/tutorials/vector.html
@@ -94,25 +90,21 @@ class Player {
       this.velocity += ACCELERATION;
       this.moveNorth(STEPDIAGONAL, NORTHEAST);
       this.moveEast(STEPDIAGONAL, NORTHEAST);
-      this.height = 70;
     }
     if (isArrowUp && isArrowLeft) {
       this.velocity += ACCELERATION;
       this.moveNorth(STEPDIAGONAL, NORTHWEST);
       this.moveWest(STEPDIAGONAL, NORTHWEST);
-      this.height = 70;
     }
     if (isArrowDown && isArrowRight) {
       this.velocity += ACCELERATION;
       this.moveSouth(STEPDIAGONAL, SOUTHEAST);
       this.moveEast(STEPDIAGONAL, SOUTHEAST);
-      this.height = 70;
     }
     if (isArrowDown && isArrowLeft) {
       this.velocity += ACCELERATION;
       this.moveSouth(STEPDIAGONAL, SOUTHWEST);
       this.moveWest(STEPDIAGONAL, SOUTHWEST);
-      this.height = 70;
     }
     if (!isArrowDown && !isArrowUp && !isArrowLeft && !isArrowRight) {
       this.velocity = 0;
