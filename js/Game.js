@@ -159,7 +159,10 @@ class Game {
     let allSightsSeen = docSights.childNodes;
     const button = document.createElement("button");
     const canvasDiv = document.getElementById("defaultCanvas0");
+    const docEnd = document.getElementById("end");
+    const docEndBottom = document.getElementById("end-bottom");
     const countdownDiv = document.getElementById("countdown");
+    const scoreDiv = document.getElementById("end-score");
 
     clear();
     this.inCanvas(); // calculate where the player is in relation to the map
@@ -194,12 +197,16 @@ class Game {
     if (secondsPassed >= GAMELENGTH) {
       noLoop();
       allSightsSeen.forEach((node) => (node.style.display = ""));
-      button.innerText = `${this.score} sights seen. Click to play again.`;
+      button.innerText = `Click to play again.`;
+      scoreDiv.innerText = this.score;
+
       canvasDiv.style.display = "none";
-      docGame.appendChild(button);
+      docEnd.style.display = "";
+      docEndBottom.appendChild(button);
       button.onclick = () => {
         this.replayGame();
         button.parentNode.removeChild(button);
+        docEnd.style.display = "none";
         canvasDiv.style.display = "";
         loop();
       };

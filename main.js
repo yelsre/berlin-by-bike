@@ -44,6 +44,7 @@ function setup() {
   const gameCanvas = createCanvas(WIDTH, HEIGHT);
   const docCanvas = document.getElementById("defaultCanvas0");
   const docStart = document.createElement("div");
+  const docButton = document.createElement("div");
   const docInstructions = document.createElement("div");
   const button = document.createElement("button");
 
@@ -53,23 +54,62 @@ function setup() {
   docStart.setAttribute("id", "start");
   docStart.classList.add("start-end");
   docInstructions.setAttribute("id", "instructions");
+  docButton.setAttribute("id", "instructions-button");
   docInstructions.innerHTML =
-    "<h1> Instructions </h1>" +
-    "<h2> 1. Explore Berlin by bike </h2>" +
-    "<div>" +
-    `<img src="img/player/playerE.png" alt="Bike player" width="70" height="70">` +
+    `<div id = "instructions-top">` + // top div
+    "<div>" + // left arrow
+    `<img src="img/theme/arrowUpL.png" alt="Arrow pointing to sights" width="30" height="100">` +
     "</div>" +
-    `<h2> 2. See as many sights as you can <img src="img/theme/unseen.png" alt="Bike player" width="30" height="50"> </h2> ` +
-    "<h2> 3. Before it gets dark </h2>";
+    "<div>" + // center top div
+    "<h1> Instructions </h1>" +
+    "<p> 1. Explore Berlin by bike </p>" +
+    `<div id = "instructions-top-images">` +
+    `<img src="img/theme/arrowRight.png" alt="Arrow pointing to player" width="40" height="60">` +
+    `<img src="img/player/playerE.png" alt="Bike player" width="70" height="70">` +
+    `<img src="img/theme/arrowKeys.png" alt="Arrow keys" width="70" height="50">` +
+    "</div>" +
+    "</div>" +
+    "<div>" + // right arrow
+    `<img src="img/theme/arrowUpR.png" alt="Arrow pointing to sights" width="40" height="100">` +
+    "</div>" +
+    "</div>" +
+    `<div id = "instructions-bottom">` + // bottom div
+    // `<div>` + // bottom div left
+    `<img src="img/theme/unseen.png" alt="Unseen sight" width="30" height="50"></img>` +
+    `<p> 2. See as many sights as you can  </p> ` +
+    // "</div>" +
+    // "<div>" + // bottom div right
+    "<p> 3. Before it gets dark </p>" +
+    `<img src="img/theme/moon.png" alt="Moon icon" width="40" height="45"></img>` +
+    // "</div>" +
+    "</div>";
 
   button.innerText = `Play.`;
   docGame.appendChild(docStart);
   docStart.appendChild(docInstructions);
-  docInstructions.appendChild(button);
+  docInstructions.appendChild(docButton).appendChild(button);
   button.onclick = () => {
     docCanvas.style.display = "";
     start();
     docStart.style.display = "none";
   };
+
+  const docEnd = document.createElement("div");
+  docEnd.setAttribute("id", "end");
+  docEnd.classList.add("start-end");
+  docGame.appendChild(docEnd);
+  docEnd.innerHTML =
+    "<h1> Time to go home </h1>" +
+    `<div id = "end-center">` +
+    `<img src="img/theme/moon.png" alt="Moon" width="70" height="80"></img>` +
+    `<div>` +
+    `<p>You saw <span id="end-score"></span> sights on your journey!</p>` +
+    `<br>` +
+    `<p>Discover more about where you visited below.</p>` +
+    `</div>` +
+    `</div>` +
+    `<div id = "end-bottom">` +
+    `</div>`;
+  docEnd.style.display = "none";
   noLoop();
 }

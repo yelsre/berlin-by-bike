@@ -32,20 +32,20 @@ header {
 footer {
   background-color: white;
   padding: 5px 20px;
-  margin: 5px 0px 0px 0px;
+  margin: 0 auto;
   color: darkslategray;
-  border-radius: 10px;
+  font-size: small;
+  border-radius: 10px 10px 0px 0px;
+  position: fixed;
+  bottom: 0;
+  width: 560px;
 }
 
 h1 {
   font-family: "Amatic SC", cursive;
   font-size: xx-large;
   color: darkslategray;
-}
-
-h2 {
-  font-size: medium;
-  color: darkslategray;
+  margin: 0px 0px 20px 0px;
 }
 
 #time-left {
@@ -95,16 +95,62 @@ button {
   justify-content: center;
   border-radius: 0px 0px 10px 10px;
   background-color: white;
+  height: 300px;
 }
 
-#instructions {
-  width: 400px;
+#end {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: flex-start;
   align-items: center;
-  align-content: stretch;
+}
+
+#instructions {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+p {
+  font-size: medium;
+  color: darkslategray;
+}
+
+#instructions-top {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+#instructions-top-images {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 280px;
+}
+
+#end-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#end-center > * {
+  margin: 10px;
+}
+
+#instructions-bottom {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+#instructions-button {
+  display: flex;
+  justify-content: center;
 }
 
 ul {
@@ -112,7 +158,6 @@ ul {
 }
 
 a {
-  text-decoration: none;
   color: darkslategray;
 }
 
@@ -130,4 +175,8 @@ li {
 #sights img {
   filter: grayscale(50%);
   border-radius: 5px;
+}
+
+#sights {
+  padding: 0px 0px 20px 0px;
 }
