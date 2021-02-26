@@ -72,8 +72,8 @@ h1 {
 
 #game {
   height: 300px;
-  border-radius: 5px;
-  border-radius: 10px;
+  border-radius: 0px 0px 10px 10px;
+  overflow: hidden;
 }
 
 button {
@@ -169,12 +169,17 @@ li {
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 5px 5px #e27c28;
+  box-shadow: 5px 5px #a5399d;
 }
 
 #sights img {
   filter: grayscale(50%);
   border-radius: 5px;
+}
+
+#img-attribution {
+  font-size: xx-small;
+  text-align: right;
 }
 
 #sights {

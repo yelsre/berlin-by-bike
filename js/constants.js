@@ -2,7 +2,7 @@ const WIDTH = 600;
 const HEIGHT = WIDTH / 2;
 const ACCELERATION = 0.05;
 const MAXVELOCITY = 4;
-const MAPLIMIT = 70; // the limit that the bike can go to the edge of the map
+const MAPLIMIT = 90; // the limit that the bike can go to the edge of the map
 const ARROWUP = 38;
 const ARROWDOWN = 40;
 const ARROWLEFT = 37;
@@ -15,7 +15,7 @@ const docTimeLeft = document.querySelector("#time-left span");
 const docGame = document.querySelector("#game");
 
 // const doc
-const GAMELENGTH = 60; // game length in seconds
+const GAMELENGTH = 120; // game length in seconds
 const FRAMERATE = 60; //p5 frame rate per second
 
 // NORTH SOUTH EAST WEST

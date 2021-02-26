@@ -1,5 +1,5 @@
 class Poi {
-  constructor(poix, poiy, name, wiki, wiki_img) {
+  constructor(poix, poiy, name, wiki, wiki_img, img_att) {
     this.x = poix;
     this.y = poiy;
     this.width = 30;
@@ -7,6 +7,7 @@ class Poi {
     this.name = name;
     this.wiki = wiki;
     this.wiki_img = wiki_img;
+    this.img_att = img_att;
     this.status = "inactive";
   }
 

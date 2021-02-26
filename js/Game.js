@@ -9,7 +9,8 @@ class Game {
           element[0].poixy[1],
           element[0].element.properties.name,
           element[0].element.properties.wiki,
-          element[0].element.properties.wiki_img
+          element[0].element.properties.wiki_img,
+          element[0].element.properties.img_att
         )
     );
     this.score = 0;
@@ -176,9 +177,14 @@ class Game {
     this.poiArray.forEach((poi) => {
       if (this.collisionCheck(this.player, poi)) {
         poi.status = "active";
-        newSight.innerHTML = `<a href="${poi.wiki}" target="_blank">${poi.name}</a> 
-          <img src="${poi.wiki_img}" alt="Poi image from wikipedia" height="100">
-        `;
+        newSight.innerHTML =
+          `<a href="${poi.wiki}" target="_blank">${poi.name}</a>` +
+          `<div id = "img-attribution">` +
+          poi.wiki_img +
+          `<div>` +
+          poi.img_att +
+          `</div>` +
+          `</div>`;
         if (numberPoiVisited < this.score) {
           allSightsSeen.forEach((node) => (node.style.display = "none"));
           docSights.insertAdjacentElement("afterbegin", newSight);
